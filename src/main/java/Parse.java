@@ -2,6 +2,7 @@ import java.io.StringReader;
 import java.util.*;
 import java.lang.*;
 import org.jgrapht.*;
+import org.jgrapht.alg.NaiveLcaFinder;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.io.*;
@@ -139,12 +140,15 @@ public class Parse {
                 " fontname = \" Bookman Old Style Bold Italic \" ;\n" +
                 " label = \" Game of Thrones Family Tree \"\n" +
                 " }\n"+" }";
+        String error = " node [ style = filled , color = white , label = \" Maekar I \" ]; ,→ Maekar_I ;";
         System.out.println("hi");
         try {
             importer.importGraph(g,new StringReader(a));
         } catch (ImportException e) {
             e.printStackTrace();
         }
-
+        NaiveLcaFinder<String,DefaultEdge> nlca = new NaiveLcaFinder<>(g);
+        String abcd = nlca.findLca("Sansa","Arya");
+        System.out.println(abcd);
     }
 }
